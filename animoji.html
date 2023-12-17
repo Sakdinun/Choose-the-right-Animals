@@ -93,14 +93,14 @@
     <div class="details-tab">Streak: <span id="streakCount">0</span></div>
     <img id="animal-image" alt="Animal">
     <div class ="options-class" id="options-container" object-position="center" button="" style="justify-content: center;" >
-      <!-- Emoji buttons will be added dynamically with JavaScript -->
     </div>
   </div>
 
   <script>
-    const animalsFolder = 'animals'; // Change this to your folder name
-    const animals = ['dog', 'cat', 'frog', 'fish', 'penguin', 'bear']; // Sample data (replace with your actual file names)
+    const animalsFolder = 'animals'; 
+    const animals = ['dog', 'cat', 'frog', 'fish', 'penguin', 'bear']; 
     let streakCount = 0;
+    let lastDisplayedAnimal = null;
     // Function เพื่อสลับ Array
     function shuffleArray(array) {  
       for (let i = array.length - 1; i > 0; i--) {
@@ -113,9 +113,15 @@
     function setupQuestion() {
       shuffleArray(animals);
 
-      const correctIndex = Math.floor(Math.random() * animals.length);
-      const correctAnimal = animals[correctIndex];
+      let correctIndex = Math.floor(Math.random() * animals.length);
+      let correctAnimal = animals[correctIndex];
+      
+      while (correctAnimal === lastDisplayedAnimal) {
+        correctIndex = Math.floor(Math.random() * animals.length);
+        correctAnimal = animals[correctIndex];  
+      }
 
+      lastDisplayedAnimal = correctAnimal;
       document.getElementById('animal-image').src = `${animalsFolder}/${correctAnimal}.jpg`;
 
       const optionsContainer = document.getElementById('options-container');
